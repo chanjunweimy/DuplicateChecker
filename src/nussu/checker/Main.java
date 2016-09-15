@@ -34,12 +34,12 @@ public class Main extends Application {
     	try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
+            loader.setLocation(Main.class.getResource("gui/view/RootLayout.fxml"));
             _rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(_rootLayout);
-            scene.getStylesheets().add(getClass().getResource("style/application.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("gui/style/application.css").toExternalForm());
             _primaryStage.setScene(scene);
             _primaryStage.show();
             
@@ -56,7 +56,7 @@ public class Main extends Application {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/CheckerInterface.fxml"));
+            loader.setLocation(Main.class.getResource("gui/view/CheckerInterface.fxml"));
             AnchorPane checkerInterface = (AnchorPane) loader.load();
 
             // Set person overview into the center of root layout.
