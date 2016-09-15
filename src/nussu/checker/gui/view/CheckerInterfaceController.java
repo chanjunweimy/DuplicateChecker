@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import nussu.checker.model.CheckerStorage;
 
 public class CheckerInterfaceController {
 	@FXML
@@ -16,12 +17,18 @@ public class CheckerInterfaceController {
 	@FXML
 	private TextField interfaceInputBox;
 	
+	private CheckerStorage _storage = null;
+	private static final String FORMAT_NOT_DUPLICATE = "\"%s\" is added";
+	private static final String FORMAT_DUPLICATE = "\"%s\" is not added because it is a duplicate";
+	
 	/**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
     @FXML
     private void initialize() {
+    	_storage = CheckerStorage.getInstance();
+    	
     	// Listen for TextField text changes
     	interfaceInputBox.textProperty().addListener(new ChangeListener<String>() {
     	    @Override
@@ -40,13 +47,24 @@ public class CheckerInterfaceController {
     	            String text = interfaceInputBox.getText();
 
     	            // do your thing...
-    	            interfaceDisplayArea.setText(text);
+    	            checkDuplicate(text);
 
     	            // clear text
     	            interfaceInputBox.setText("");
     	        }
     	    }
     	});
+    }
+    
+    private void checkDuplicate(String text) {
+    	boolean isAdded = _storage.addEntry(text);
+    	String response = null;
+        if (isAdded) {
+        	response = String.format(FORMAT_NOT_DUPLICATE, text);	
+        } else {
+        	response = String.format(FORMAT_DUPLICATE, text);
+        }
+        interfaceDisplayArea.setText(response);
     }
     
 
