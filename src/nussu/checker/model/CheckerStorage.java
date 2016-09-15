@@ -3,7 +3,9 @@ package nussu.checker.model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.HashSet;
@@ -48,11 +50,14 @@ public class CheckerStorage {
 		_storageSet.add(line);
 	    _storageList.add(line);
 		
-		line = line + System.lineSeparator();
-		try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), CHARSET_ASCII)) {
-		    writer.write(line, 0, line.length());
-		} catch (IOException x) {
-		    System.err.format("IOException: %s%n", x);
+		
+		try (FileWriter fw = new FileWriter(file, true);
+			    BufferedWriter bw = new BufferedWriter(fw);
+			    PrintWriter out = new PrintWriter(bw)){
+			    out.println(line);
+
+		} catch (IOException e) {
+			System.err.format("IOException: %s%n", e);
 		}
 	}
 	
